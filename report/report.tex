@@ -1,0 +1,236 @@
+%++++++++++++++++++++++++++++++++++++++++
+% Don't modify this section unless you know what you're doing!
+%\documentclass[letterpaper,12pt]{article}
+\documentclass[a4paper]{article}
+\usepackage{tabularx} % extra features for tabular environment
+\usepackage{amsmath}  % improve math presentation
+\usepackage{graphicx} % takes care of graphic including machinery
+%\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage{cite} % takes care of citations
+%\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+%\hypersetup{
+%	colorlinks=true,       % false: boxed links; true: colored links
+%	linkcolor=blue,        % color of internal links
+%	citecolor=blue,        % color of links to bibliography
+%	filecolor=magenta,     % color of file links
+%	urlcolor=blue
+%}
+%++++++++++++++++++++++++++++++++++++++++
+\usepackage{indentfirst}
+\usepackage{tensor}
+\usepackage{amssymb}
+\allowdisplaybreaks
+\usepackage{bm}
+\newcommand{\at}[2][]{#1|_{#2}}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+
+\usepackage{hyperref}
+
+\usepackage[none]{hyphenat} % Avoids to go out of margin
+
+\begin{document}
+\sloppy
+
+\title{Modeling and Control of Multi-Rotor UAVs\\Paper Proposal}
+\author{Michele Cipriano}
+\date{\today}
+\maketitle
+
+%\begin{abstract}
+%In this experiment we studied a very important physical effect by measuring the
+%dependence of a quantity $V$ of the quantity $X$ for two different sample
+%temperatures.  Our experimental measurements confirmed the quadratic dependence
+%$V = kX^2$ predicted by Someone's first law. The value of the %mystery parameter
+%$k = 15.4\pm 0.5$~s was extracted from the fit. This value is
+%not consistent with the theoretically predicted $k_{theory}=17.34$~s. We attribute this
+%discrepancy to low efficiency of our $V$-detector.
+%\end{abstract}
+
+
+\section{Introduction}
+The papers I chose to propose cover different aspects of UAVs research.
+The first one, ``Real-Time Planning with Multi-Fidelity Models for Agile Flights
+in Unknown Environments'' \cite{DBLP:journals/corr/abs-1810-01035}, introduces
+a real time planning algorithm for UAVs in unknown environments, developing
+three different models of the UAV in order to guarantee computational
+tractability. The second one, ``Vision-based Autonomous Landing in
+Catastrophe-Struck Environments'' \cite{DBLP:journals/corr/abs-1809-05700},
+is a practical use case of UAVs and it introduces a framework that allows
+a drone to land in a catastrophic environment, creating in the meanwhile
+a precise reconstrution of the world in order to make a human operator
+perform more complex analysis. The last paper,
+``Neural Lander: Stable Drone Landing Control using Learned Dynamics''
+\cite{DBLP:journals/corr/abs-1811-08027}, introduces a nonlinear controller
+that models the ground effects caused by the interaction between
+multi-rotor airflow and the environment with a DNN, formally proving its
+stability and presenting results on a real quadrotor.
+
+\section{Real-Time Planning with Multi-Fidelity Models for Agile Flights
+    in Unknown Environments}
+This paper \cite{DBLP:journals/corr/abs-1810-01035} introduces a real time
+planning algorithm for UAVs in unknown environments.
+
+The approach is to develop
+three multi-fidelity models of the UAV in order to make sure the hierarchical
+planning architecture (composed by a global and a local planner)
+is behaving correctly. In particular, the Jump Point Search (JPS) algorithm has been
+used as a global planner to find the shortest path to the goal from the
+current position of the UAV, guaranteeing completeness and optimality. The local
+planner monitors the JPS solution looking for changes between each replan. If
+a change is detected, a new trajectory composed by a high (jerk-controlled),
+a medium (velocity-controlled) and a low fidelity
+model (JPS) is computed.
+
+The environment is represented using a sliding map in order to make it possible to
+compute collision check for each of the three fidelity models. In particular,
+a depth map is obtained from the UAV and fused into an occupancy grid using a
+k-d tree data structure, ensuring that the local planner is using the most
+recent data of the map.
+
+The experiments have been performed in simulation considering
+a random cluttered forest, a bugtrap and a cluttered office scenario,
+making comparison with other methods. The experiments on hardware have used
+a UAV with all the perception, planning and control algorithms running
+onboard.
+
+This method guarantees computational tractability keeping
+replanning times in the order of 5-40 ms in simulation.
+
+\textbf{Personal Comments:} I have found this paper interesting because of
+the state of the art approach in real time planning when dealing with
+unknown environments. In particular, I liked the idea of considering
+multi-fidelity models to make sure the UAV is behaving correctly, always
+achieving the goal while keeping the computation real-time. The authors
+managed to describe in detail their approach, considering multiple
+scenarios and comparing their methods with several different algorithms.
+A YouTube video with some of the experiments is available at
+\url{https://www.youtube.com/watch?v=XVaT_c8uSTA}.
+
+\section{Vision-based Autonomous Landing in Catastrophe-Struck Environments}
+This paper \cite{DBLP:journals/corr/abs-1809-05700} introduces an
+autonomous landing method based on vision algorithms when dealing with
+catastrophic environments.
+
+The approach aims at making a UAV equipped with a bioradar to autonomously
+land on debris piles in order to locate the survivors in a natural
+disaster. In particular, the authors developed a multi-sensor fusion method to
+correctly estimate the pose of the UAV in two different 3D representations
+of the environment. The first one, which uses Octomap, is used as an internal
+map to make trajectory planning computationally tractable. The second one,
+which uses Voxblox, is a mesh reconstruction which is transmitted to
+the ground station in order to be analyzed by a human operator. In this way
+the UAV will be able to do both planned and emergency landings.
+
+The landing site is evaluated in three steps. Initially a costmap is computed
+considering the terrain flatness, steepness, the depth accuracy and the
+energy consumption. Then, a set of candidates is chosen from the costmap. In the
+end, a clustering algorithm is used to reduce the number of unique landing sites.
+The landing site is chosen by solving an unconstrained nonlinear optimization
+problem and a minimum-jerk trajectory is computed using a variant of RRT*.
+
+The experiments have been performed on a virtual environment, which simulates
+a small city, and in Training Center of Rescue (Germany), where a real quadrotor
+has been used.
+
+This method, which makes use of a backend to use Octomap and Voxblox, makes it
+possible to compute the entire landing site detection algorithm in 167.5 ms,
+allowing it to be used on a real UAV.
+
+\textbf{Personal Comments:} I have found this paper interesting because of
+its practical application. In particular, I liked how the authors
+decided to structure the pipeline of their algorithm so that it is possible
+to make it run on a real UAV. The idea of using two different 3D maps
+not only makes the UAV able to take decisions on its own, but also allows a
+human expert to understand the real situtation of the environment, enabling
+more complex decisions and reducing the gap between research and real-world
+applications.
+
+\section{Neural Lander: Stable Drone Landing Control using Learned Dynamics}
+This paper \cite{DBLP:journals/corr/abs-1811-08027} introduces a deep learning
+based nonlinear controller that controls the quadrotor landing, modeling
+the ground effects caused by the interaction between multi-rotor airflow and
+the environment.
+
+Considering the dynamics of the quadrotor:
+\begin{align}
+    m\bm{\dot{v}} &= m\bm{g} + R\bm{f}_u + \bm{f}_a \\
+    J\bm{\dot{\omega}} &= J\bm{\omega} \times \bm{\omega} + \bm{\tau}_u + \bm{\tau}_a
+\end{align}
+
+\noindent with $\bm{\dot{p}} = \bm{v}$, $\bm{p} \in \mathbb{R}^3$ global
+position, $\bm{v} \in \mathbb{R}^3$ linear velocity, $\bm{R} \in SO(3)$
+attitude rotation matrix, $\bm{\omega} \in \mathbb{R}^3$ body angular velocity,
+$\bm{g} = [0, 0, -g]^T$ gravity vector, $\bm{f}_u = [0, 0, T]^T$ total thrust
+and $\bm{\tau}_u = [\tau_x, \tau_y, \tau_z]^T$ body torques, the approach aims
+at developing a DNN that models the unknown disturbances forces $\bm{f}_a$
+and torques $\bm{\tau}_a$ which originates from complex aerodynamics
+interactions between the quadrotor and the environment. In particular,
+since the $\bm{\tau}_a$ is bounded during landing and take-off, only
+$\bm{f}_a$ needs to be studied.
+
+The authors implemented a DNN with spectral normalization to guarantee the
+stability of the output. In particular, they exploited this kind on
+normalization to formally prove that the nonlinear controller used to
+determine the force exerted by the rotors
+is stable. The proof is
+built upon the assumption that $\bm{p}_d(t)$, $\bm{\dot{p}}_d(t)$ and
+$\bm{\ddot{p}}_d(t)$ are bounded, the inputs $\bm{u}$ of the system update
+much faster than the position controller and the approximation error on
+$\bm{\hat{f}}_a$ is upper bounded.
+
+The experiments have been performed using the Intel Aero quadrotor. First,
+bench tests have been done in order to estimate the mass, the diameter of
+the rotors, the thrust coefficient, the air density and the
+gravity. Then, data has been collected by making the UAV perform some
+maneuvers in order to create a dataset. In the end, a DNN has been trained and
+the resulting model has been compared to a PD controller for take-off and
+landing tasks in both 1D and 3D.
+
+This method allows the drone to precisely land on the ground surface in both
+1D and 3D cases, reducing drifts in $x$, $y$ directions and learning about
+non-dominant aerodynamics such as air drag. It is also interesting to notice
+that the lack of spectral normalization can even result in crashes, meaning
+that it is important to have a rigorous theoretical analysis to guarantee
+the stability of the controller used on the drone.
+
+\textbf{Personal Comments:} I have found this paper interesting because of
+its theoretical approach to the field. Using a neural network as it is often
+results in undesired behaviours, going in the opposite direction of what it
+needs to be done in robotics. The authors managed to properly model the
+problem, formally proving the stability of their new approach, allowing it
+to be used on a real UAV and introducing a new research approach that
+integrates learning methods with control theory.
+A YouTube video with some of the experiments is available at
+\url{https://www.youtube.com/watch?v=C_K8MkC_SSQ}.
+
+%++++++++++++++++++++++++++++++++++++++++
+% References section will be created automatically
+% with inclusion of "thebibliography" environment
+% as it shown below. See text starting with line
+% \begin{thebibliography}{99}
+% Note: with this approach it is YOUR responsibility to put them in order
+% of appearance.
+
+\clearpage
+\bibliography{bibliography}
+\bibliographystyle{ieeetr}
+
+%\begin{thebibliography}{99}
+
+%\bibitem{melissinos}
+%A.~C. Melissinos and J. Napolitano, \textit{Experiments in Modern Physics},
+%(Academic Press, New York, 2003).
+
+%\bibitem{Cyr}
+%N.\ Cyr, M.\ T$\hat{e}$tu, and M.\ Breton,
+% "All-optical microwave frequency standard: a proposal,"
+%IEEE Trans.\ Instrum.\ Meas.\ \textbf{42}, 640 (1993).
+
+%\bibitem{Wiki} \emph{Expected value},  available at
+%\texttt{http://en.wikipedia.org/wiki/Expected\_value}.
+
+%\end{thebibliography}
+
+
+\end{document}

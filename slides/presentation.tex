@@ -1,0 +1,162 @@
+\documentclass{beamer}
+\usetheme{metropolis}           % Use metropolis theme
+\title{Vision-based Autonomous Landing in Catastrophe-Struck Environments}
+\subtitle{\textit{Authors:} Mayank Mittal, Abhinav Valada, Wofram Burgard}
+\date{\today}
+\author{Michele Cipriano}
+\institute{Control Problems in Robotics: Modeling and control of
+    multi-rotor UAVs\\Department of Computer, Control and Management
+    Engineering\\Sapienza University of Rome}
+
+% Fontsize of figure smaller than normalsize:
+%\setbeamerfont{caption}{size=\scriptsize}
+
+\begin{document}
+\nocite{*}
+
+    \maketitle
+
+    \begin{frame}{Introduction}
+        \begin{columns}[c,onlytextwidth]
+            \column{0.5\textwidth}
+                \vspace*{\fill}
+                Intro.
+                \begin{itemize}
+                    \item Why it's important (bioradiolocation, also emergency landing)
+                    \item previous work
+                \end{itemize}
+                \vspace*{\fill}
+
+            \column{0.5\textwidth}
+                \begin{figure}
+                    \includegraphics[width=\textwidth]{images/Fig1.png}
+                \end{figure}
+        \end{columns}
+
+    \end{frame}
+
+    \begin{frame}{Technical Approach}
+        Brief introduction to ch. 3, describe approach and then discuss details.
+        \begin{itemize}
+            \item State Estimation
+            \item Landing Site Detection
+            \item 3D Volumetric Mapping
+            \item Landing Trajectory Estimation
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Technical Approach: State Estimation}
+        ORB-SLAM2 + IMU + barometer + GPS (EKF multi-sensor fusion).
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        Cost functions + clustering.
+        \begin{equation*}
+            J = c_1 J_{DE} + c_2 J_{FL} + c_3 J_{N} + c_4 J_{EC}
+        \end{equation*}
+        with $c_i \in [0, 1]$ weighting parameters such that
+        $\sum_i c_i = 1$.
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        Confidence in \textbf{\textsc{Depth Information}} $J_{DE}$:
+        \begin{equation*}
+            J_{DE}(p) = 1 - \frac{D(p)^2 - min\{D^2\}}{max\{D^2\}}
+        \end{equation*}
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        \textbf{\textsc{Flatness Information}} $J_{FL}$:
+        \begin{gather*}
+            di(B, p) = min\Big\{\|p-q\| \Big| B(q)=1\Big\} \\
+            J_{FL}(p) = di(Canny(D), p)
+        \end{gather*}
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        \textbf{\textsc{Steepness Information}} $J_{N}$:
+        \begin{gather*}
+            \theta = cos^{-1}(\hat{n}_z) \\
+            n(p) = exp\left\{ -\frac{\theta^2}{2\theta^2_{th}} \right\}
+        \end{gather*}
+        description $\theta_{th}=\pi/12$.
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        \textbf{\textsc{Energy Consumption Information}} $J_{EC}$:
+        \begin{equation*}
+            J_{EC}(p) = \int_{t_0}^{t_f} P(t)dt
+        \end{equation*}
+    \end{frame}
+
+    \begin{frame}{Technical Approach: 3D Volumetric Mapping}
+        OctoMaps and Voxblox
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Trajectory Estimation}
+        \begin{columns}[c,onlytextwidth]
+            \column{0.5\textwidth}
+                RRT* and minimum-jerk trajectory.
+                \begin{itemize}
+                    \item First.
+                    \item Second.
+                \end{itemize}
+
+            \column{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{images/Fig4.png}
+                \end{figure}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Experimental Evaluation}
+        Description:
+        \begin{itemize}
+            \item Hyperrealistic Simulation
+            \item Real-World Outdoor (Training Center for Rescue, Germany)
+        \end{itemize}
+        + computation costs
+    \end{frame}
+
+    \begin{frame}{Experimental Evaluation: Hyperrealistic Simulation}
+        Hyperrealistic Simulation Experiments
+    \end{frame}
+
+    \begin{frame}{Experimental Evaluation: Real-World Outdoor}
+        Real-World Outdoor Experiments
+    \end{frame}
+
+    \begin{frame}{Experimental Evaluation: Computation Costs}
+        \begin{columns}[c,onlytextwidth]
+            \column{0.5\textwidth}
+                Computation costs
+
+            \column{0.5\textwidth}
+                \vspace{0.4cm}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{images/Fig8a.png}
+                \end{figure}
+                \vspace{-0.8cm}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{images/Fig8b.png}
+                \end{figure}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Conclusion}
+        Conclusion.
+    \end{frame}
+
+    \begin{frame}[standout]
+        Q\&A
+    \end{frame}
+
+    \begin{frame}{References}
+        \bibliography{bibliography}
+        \bibliographystyle{ieeetr}
+    \end{frame}
+
+\end{document}
