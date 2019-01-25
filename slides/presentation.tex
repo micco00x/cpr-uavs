@@ -1,4 +1,5 @@
-\documentclass{beamer}
+\documentclass[10pt]{beamer}
+\usepackage{ragged2e} % \justifying
 \usetheme{metropolis}           % Use metropolis theme
 \title{Vision-based Autonomous Landing in Catastrophe-Struck Environments}
 \subtitle{\textit{Authors:} Mayank Mittal, Abhinav Valada, Wofram Burgard}
@@ -9,7 +10,7 @@
     Engineering\\Sapienza University of Rome}
 
 % Fontsize of figure smaller than normalsize:
-%\setbeamerfont{caption}{size=\scriptsize}
+\setbeamerfont{caption}{size=\scriptsize}
 
 \begin{document}
 \nocite{*}
@@ -49,43 +50,81 @@
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Site Detection}
-        Cost functions + clustering.
-        \begin{equation*}
-            J = c_1 J_{DE} + c_2 J_{FL} + c_3 J_{N} + c_4 J_{EC}
-        \end{equation*}
-        with $c_i \in [0, 1]$ weighting parameters such that
-        $\sum_i c_i = 1$.
-    \end{frame}
-
-    \begin{frame}{Technical Approach: Landing Site Detection}
+        \justifying
         Confidence in \textbf{\textsc{Depth Information}} $J_{DE}$:
         \begin{equation*}
             J_{DE}(p) = 1 - \frac{D(p)^2 - min\{D^2\}}{max\{D^2\}}
         \end{equation*}
+        with $D$ depthmap obtained from the stereo camera and $p=(x,y)$
+        pixel in the depthmap.
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Site Detection}
+        \justifying
         \textbf{\textsc{Flatness Information}} $J_{FL}$:
         \begin{gather*}
             di(B, p) = min\Big\{\|p-q\| \Big| B(q)=1\Big\} \\
             J_{FL}(p) = di(Canny(D), p)
         \end{gather*}
+        with $B$ binary image and $p, q$ pixels in the image plane. $Canny$
+        applies the Canny edge detector over the depthmap $D$.
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Site Detection}
+        \justifying
         \textbf{\textsc{Steepness Information}} $J_{N}$:
-        \begin{gather*}
-            \theta = cos^{-1}(\hat{n}_z) \\
+        \begin{itemize}
+            \item point cloud from the depthmap in global frame
+            \item average 3D gradients algorithm to estimate normals map $N$
+            \item evaluate deviation of the normalized surface normal
+                $\hat{n}$ wrt z-axis $\hat{z}$ in the world frame:
+                $\theta = cos^{-1}(\hat{n}^T\hat{z})$
+            \item compute $n(p)$ steepness score for each pixel $p$ given
+                $\theta_{th}=\pi/12$ maximum tolerable slope
+        \end{itemize}
+        \begin{equation*}
             n(p) = exp\left\{ -\frac{\theta^2}{2\theta^2_{th}} \right\}
-        \end{gather*}
-        description $\theta_{th}=\pi/12$.
+        \end{equation*}
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Site Detection}
+        \justifying
         \textbf{\textsc{Energy Consumption Information}} $J_{EC}$:
         \begin{equation*}
             J_{EC}(p) = \int_{t_0}^{t_f} P(t)dt
         \end{equation*}
+        with $t_0$ and $t_f$ time of flight to reach $p$ and $P(t)$
+        instantaneous battery power. Approximate the integral with Euclidean
+        distance between the UAV and $p$.
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        \justifying
+        Scale the costmaps to the same range through min-max normalization
+        and compute the final decision map $J$ taking a weighted sum:
+        \begin{gather*}
+            J = c_1 J_{DE} + c_2 J_{FL} + c_3 J_{N} + c_4 J_{EC} \\
+            c_i \in [0, 1] \quad \sum_i c_i = 1
+        \end{gather*}
+        \vspace{-0.5cm}
+        \begin{itemize}
+            \item keep the sites checking whether the UAV could actually land
+            \item k-d tree to efficiently store new landing sites
+            \item hierarchical clustering algorithm to agglomerate sites
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        \begin{figure}
+            \caption{
+                \justifying
+                Overview of the landing site detection algorithm. In
+                the costmaps, red indicates high score while blue indicates
+                a lower score. Detected landing sites are projected onto
+                a 3D reconstruction of the environment.}
+            \vspace{-0.3cm}
+            \includegraphics[width=\textwidth]{images/Fig3.png}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Technical Approach: 3D Volumetric Mapping}
@@ -103,7 +142,6 @@
 
             \column{0.5\textwidth}
                 \begin{figure}
-                    \centering
                     \includegraphics[width=\textwidth]{images/Fig4.png}
                 \end{figure}
         \end{columns}
