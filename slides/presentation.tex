@@ -128,7 +128,18 @@
     \end{frame}
 
     \begin{frame}{Technical Approach: 3D Volumetric Mapping}
-        OctoMaps and Voxblox
+        Probabilistic volumetric map:
+        \begin{itemize}
+            \item navigation and planning
+            \item low-resolution map ($0.5$m) using \textbf{OctoMaps}
+            \item faster trajectory planning
+        \end{itemize}
+
+        3D textured mesh:
+        \begin{itemize}
+            \item dynamic map growing using \textbf{Voxblox}
+            \item high-resolution mesh transmitted to the rescue team
+        \end{itemize}
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Trajectory Estimation}
