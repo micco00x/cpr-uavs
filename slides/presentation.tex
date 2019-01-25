@@ -143,14 +143,20 @@
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Trajectory Estimation}
+        Minimum-jerk trajectory generator with non-linear optimization:
         \begin{columns}[c,onlytextwidth]
             \column{0.5\textwidth}
-                RRT* and minimum-jerk trajectory.
+                \justifying
                 \begin{itemize}
-                    \item First.
-                    \item Second.
+                    \item \textbf{RRT*} for collision free path
+                    \item line-of-sight for waypoints
+                    \item minimum-snap polynomial trajectories using
+                        differential flat model
+                    \item high speed arcs in obstacles free regions
+                    \item low velocities in tight places
                 \end{itemize}
-
+                %Guarantees high speed arcs in obstacles free regions and low
+                %velocities in tight places.
             \column{0.5\textwidth}
                 \begin{figure}
                     \includegraphics[width=\textwidth]{images/Fig4.png}
