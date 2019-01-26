@@ -46,7 +46,13 @@
     \end{frame}
 
     \begin{frame}{Technical Approach: State Estimation}
-        ORB-SLAM2 + IMU + barometer + GPS (EKF multi-sensor fusion).
+        \justifying
+        \begin{itemize}
+            \item downward-facing stereo camera
+            \item \textbf{ORB-SLAM2} (oriented FAST and rotated BRIEF)
+            \item multi-sensor fusion (EKF) using IMU, barometer and GPS
+            \item sensor precalibrated with Kalibr toolbox
+        \end{itemize}
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Site Detection}
