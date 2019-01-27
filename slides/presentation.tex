@@ -52,7 +52,7 @@
             \item \textbf{ORB-SLAM2} (oriented FAST and rotated BRIEF)
             \item downward-facing stereo camera
             \item multi-sensor fusion (EKF) using IMU, barometer and GPS
-            \item sensor precalibrated with Kalibr toolbox
+            \item sensors precalibrated with Kalibr toolbox
         \end{itemize}
     \end{frame}
 
@@ -216,7 +216,7 @@
                         \item Voxblox 0.1m
                     \end{itemize}
                     \vspace{-0.15cm}
-                    $c_1=0.05, c_2=0.4, c_3=0.4, c_4=0.15$
+                    %$c_1=0.05, c_2=0.4, c_3=0.4, c_4=0.15$
                 }
             \end{minipage}
             \hspace{0.2cm}
@@ -234,7 +234,7 @@
                         \item Voxblox 0.1m
                     \end{itemize}
                     \vspace{-0.15cm}
-                    $c_1=0.15, c_2=0.35, c_3=0.4, c_4=0.1$
+                    %$c_1=0.15, c_2=0.35, c_3=0.4, c_4=0.1$
                 }
             \end{minipage}
         \end{figure}
@@ -251,32 +251,32 @@
         \end{figure}
     \end{frame}
 
-    \begin{frame}{Computation Costs}
-        \begin{columns}[c,onlytextwidth]
-            \column{0.5\textwidth}
-                \begin{itemize}
-                    \item landing site detection algorithm runs in
-                        \textbf{167.5ms} using \textbf{193.8MB}
-                    \item $J_{DE}$, $J_N$, $J_{EC}$ are linear
-                    \item $J_{FL}$ depends on distance transformation
-                        operation: $O(dk)$, $d=2$
-                    \item clustering time and memory complexity:
-                        $O(n^2)$ and $O(n)$
-                \end{itemize}
-
-            \column{0.5\textwidth}
-                \vspace{0.4cm}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=\textwidth]{images/Fig8a.png}
-                \end{figure}
-                \vspace{-0.8cm}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=\textwidth]{images/Fig8b.png}
-                \end{figure}
-        \end{columns}
-    \end{frame}
+%    \begin{frame}{Computation Costs}
+%        \begin{columns}[c,onlytextwidth]
+%            \column{0.5\textwidth}
+%                \begin{itemize}
+%                    \item landing site detection algorithm runs in
+%                        \textbf{167.5ms} using \textbf{193.8MB}
+%                    \item $J_{DE}$, $J_N$, $J_{EC}$ are linear
+%                    \item $J_{FL}$ depends on distance transformation
+%                        operation: $O(dk)$, $d=2$
+%                    \item clustering time and memory complexity:
+%                        $O(n^2)$ and $O(n)$
+%                \end{itemize}
+%
+%            \column{0.5\textwidth}
+%                \vspace{0.4cm}
+%                \begin{figure}
+%                    \centering
+%                    \includegraphics[width=\textwidth]{images/Fig8a.png}
+%                \end{figure}
+%                \vspace{-0.8cm}
+%                \begin{figure}
+%                    \centering
+%                    \includegraphics[width=\textwidth]{images/Fig8b.png}
+%                \end{figure}
+%        \end{columns}
+%    \end{frame}
 
     \begin{frame}{Conclusion}
         \begin{itemize}
