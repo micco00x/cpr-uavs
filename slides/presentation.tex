@@ -170,38 +170,68 @@
     \end{frame}
 
     \begin{frame}{Experimental Evaluation}
-        %\begin{itemize}
-        %    \item Hyperrealistic Simulation
-        %    \item Real-World Outdoor (Training Center for Rescue, Germany)
-        %    \item Computation Costs
-        %\end{itemize}
         \begin{figure}%[ht]
-            \begin{minipage}{0.45\linewidth}
+            \begin{minipage}{0.475\linewidth}
                 \centering
+                \textbf{Hyperrealistic Simulation}
                 \includegraphics[width=\textwidth]{images/Fig5a.png}
-                {\scriptsize Hyperrealistic Simulation}
+                \vspace{-0.25cm}
+                {
+                    \scriptsize
+                    \begin{itemize}
+                        \item AirSim + Unreal Engine + ROS
+                        \item RGBD 640x480 20Hz
+                        \item Octomap 0.5m
+                        \item Voxblox 0.1m
+                    \end{itemize}
+                    \vspace{-0.15cm}
+                    $c_1=0.05, c_2=0.4, c_3=0.4, c_4=0.15$
+                }
             \end{minipage}
-            \hspace{0.25cm}
-            \begin{minipage}{0.45\linewidth}
+            \hspace{0.2cm}
+            \begin{minipage}{0.475\linewidth}
                 \centering
+                \textbf{Training Center for Rescue}
                 \includegraphics[width=\textwidth]{images/Fig5b.png}
-                {\scriptsize TCRH Training Center for Rescue}
+                \vspace{-0.25cm}
+                {
+                    \scriptsize
+                    \begin{itemize}
+                        \item DJI M100 + NVIDIA TX2
+                        \item ZED stereo camera 640x480 20Hz
+                        \item Octomap 0.5m
+                        \item Voxblox 0.1m
+                    \end{itemize}
+                    \vspace{-0.15cm}
+                    $c_1=0.15, c_2=0.35, c_3=0.4, c_4=0.1$
+                }
             \end{minipage}
         \end{figure}
     \end{frame}
 
-    \begin{frame}{Experimental Evaluation: Hyperrealistic Simulation}
-        Hyperrealistic Simulation Experiments
-    \end{frame}
-
-    \begin{frame}{Experimental Evaluation: TCRH}
-        Real-World Outdoor Experiments
+    \begin{frame}{Experimental Evaluation}
+        \begin{figure}
+            \caption{
+                \justifying
+                Costmap evaluation and dense landing sites detection steps
+                in both simulated and real-world scenarios.}
+            \vspace{-0.3cm}
+            \includegraphics[width=\textwidth]{images/Fig6.png}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Experimental Evaluation: Computation Costs}
         \begin{columns}[c,onlytextwidth]
             \column{0.5\textwidth}
-                Computation costs
+                \begin{itemize}
+                    \item landing site detection algorithm runs in 167.5ms
+                        using 193.8MB
+                    \item $J_{DE}$, $J_N$, $J_{EC}$ are linear
+                    \item $J_{FL}$ depends on distance transformation
+                        operation: $O(dk)$, $d=2$
+                    \item clustering time and memory complexity:
+                        $O(n^2)$ and $O(n)$
+                \end{itemize}
 
             \column{0.5\textwidth}
                 \vspace{0.4cm}
