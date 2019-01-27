@@ -134,21 +134,21 @@
         \textbf{Euclidean distance} between the UAV and $p$.
     \end{frame}
 
-    \begin{frame}{Technical Approach: Landing Site Detection}
-        \justifying
-        Scale costmaps to the same range through \textbf{min-max normalization}
-        and compute the final decision map $J$ taking a weighted sum:
-        \begin{gather*}
-            J = c_1 J_{DE} + c_2 J_{FL} + c_3 J_{N} + c_4 J_{EC} \\
-            c_i \in [0, 1] \quad \sum_i c_i = 1
-        \end{gather*}
-        \vspace{-0.5cm}
-        \begin{itemize}
-            \item keep the sites checking whether the UAV could actually land
-            \item \textbf{k-d tree} to efficiently store new landing sites
-            \item \textbf{hierarchical clustering} algorithm to agglomerate sites
-        \end{itemize}
-    \end{frame}
+%    \begin{frame}{Technical Approach: Landing Site Detection}
+%        \justifying
+%        Scale costmaps to the same range through \textbf{min-max normalization}
+%        and compute the final decision map $J$ taking a weighted sum:
+%        \begin{gather*}
+%            J = c_1 J_{DE} + c_2 J_{FL} + c_3 J_{N} + c_4 J_{EC} \\
+%            c_i \in [0, 1] \quad \sum_i c_i = 1
+%        \end{gather*}
+%        \vspace{-0.5cm}
+%        \begin{itemize}
+%            \item keep the sites checking whether the UAV could actually land
+%            \item \textbf{k-d tree} to efficiently store new landing sites
+%            \item \textbf{hierarchical clustering} algorithm to agglomerate sites
+%        \end{itemize}
+%    \end{frame}
 
     \begin{frame}{Technical Approach: Landing Site Detection}
         \begin{figure}
