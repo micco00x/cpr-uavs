@@ -1,5 +1,6 @@
 \documentclass[10pt]{beamer}
 \usepackage{ragged2e} % \justifying
+\usepackage[export]{adjustbox} % left and right in images
 \usetheme{metropolis}           % Use metropolis theme
 \title{Vision-based Autonomous Landing in Catastrophe-Struck Environments}
 \subtitle{\textit{Authors:} Mayank Mittal, Abhinav Valada, Wofram Burgard}
@@ -18,30 +19,31 @@
     \maketitle
 
     \begin{frame}{Introduction}
-        \begin{columns}[c,onlytextwidth]
-            \column{0.5\textwidth}
-                \vspace*{\fill}
-                Intro.
-                \begin{itemize}
-                    \item Why it's important (bioradiolocation, also emergency landing)
-                    \item previous work
-                \end{itemize}
-                \vspace*{\fill}
-
-            \column{0.5\textwidth}
-                \begin{figure}
-                    \includegraphics[width=\textwidth]{images/Fig1.png}
-                \end{figure}
-        \end{columns}
+            Equipping UAVs with \textbf{bioradars}:
+            \begin{itemize}
+                \item estimate a set of candidate \textbf{safe landing sites}
+                \item optimize over the global area via \textbf{clustering}
+                \item project landing sites onto \textbf{volumetric reconstruction}
+                \item compute a \textbf{minimum-jerk trajectory} to land
+                    on debris piles
+                \item validate on simulated and real-world environments
+            \end{itemize}
     \end{frame}
 
     \begin{frame}{Technical Approach}
-        \begin{itemize}
-            \item State Estimation
-            \item Landing Site Detection
-            \item 3D Volumetric Mapping
-            \item Landing Trajectory Estimation
-        \end{itemize}
+        \begin{columns}[c,onlytextwidth]
+            \column{0.5\textwidth}
+            \begin{itemize}
+                \item State Estimation
+                \item Landing Site Detection
+                \item 3D Volumetric Mapping
+                \item Landing Trajectory Estimation
+            \end{itemize}
+            \column{0.5\textwidth}
+                \begin{figure}
+                    \includegraphics[width=0.96\textwidth,right]{images/Fig1.png}
+                \end{figure}
+        \end{columns}
     \end{frame}
 
     \begin{frame}{Technical Approach: State Estimation}
@@ -220,7 +222,7 @@
         \end{figure}
     \end{frame}
 
-    \begin{frame}{Experimental Evaluation: Computation Costs}
+    \begin{frame}{Computation Costs}
         \begin{columns}[c,onlytextwidth]
             \column{0.5\textwidth}
                 \begin{itemize}
@@ -249,11 +251,11 @@
 
     \begin{frame}{Conclusion}
         \begin{itemize}
-            \item vision-based autonomous landing system for UAVs
+            \item \textbf{vision-based autonomous landing system} for UAVs
             \item bioradars, search and rescue operations
             \item hazardous terrain factors
             \item nearest neighbor filtering and clustering
-            \item both low and high resolution map 
+            \item both low and high resolution map
         \end{itemize}
     \end{frame}
 
