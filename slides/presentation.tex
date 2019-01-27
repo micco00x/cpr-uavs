@@ -30,21 +30,21 @@
             \end{itemize}
     \end{frame}
 
-    \begin{frame}{Technical Approach}
-        \begin{columns}[c,onlytextwidth]
-            \column{0.5\textwidth}
-            \begin{itemize}
-                \item State Estimation
-                \item Landing Site Detection
-                \item 3D Volumetric Mapping
-                \item Landing Trajectory Estimation
-            \end{itemize}
-            \column{0.5\textwidth}
-                \begin{figure}
-                    \includegraphics[width=0.96\textwidth,right]{images/Fig1.png}
-                \end{figure}
-        \end{columns}
-    \end{frame}
+%    \begin{frame}{Technical Approach}
+%        \begin{columns}[c,onlytextwidth]
+%            \column{0.5\textwidth}
+%            \begin{itemize}
+%                \item State Estimation
+%                \item Landing Site Detection
+%                \item 3D Volumetric Mapping
+%                \item Landing Trajectory Estimation
+%            \end{itemize}
+%            \column{0.5\textwidth}
+%                \begin{figure}
+%                    \includegraphics[width=0.96\textwidth,right]{images/Fig1.png}
+%                \end{figure}
+%        \end{columns}
+%    \end{frame}
 
     \begin{frame}{Technical Approach: State Estimation}
         \justifying
@@ -54,6 +54,35 @@
             \item multi-sensor fusion (EKF) using IMU, barometer and GPS
             \item sensor precalibrated with Kalibr toolbox
         \end{itemize}
+    \end{frame}
+
+%    \begin{frame}{Technical Approach: Landing Site Detection}
+%        \justifying
+%        \begin{itemize}
+%            \item Depth Information $J_{DE}$
+%            \item Flatness Information $J_{FL}$
+%            \item Steepness Information $J_{N}$
+%            \item Energy Consumption Information $J_{EC}$
+%            \item k-d tree + agglomerative hierarchical clustering algorithm
+%        \end{itemize}
+%    \end{frame}
+
+    \begin{frame}{Technical Approach: Landing Site Detection}
+        \begin{columns}[c,onlytextwidth]
+            \column{0.57\textwidth}
+            \begin{itemize}
+                \small
+                \item Depth Information $J_{DE}$
+                \item Flatness Information $J_{FL}$
+                \item Steepness Information $J_{N}$
+                \item Energy Consumption Information $J_{EC}$
+                \item k-d tree + agglomerative hierarchical clustering algorithm
+            \end{itemize}
+            \column{0.43\textwidth}
+                \begin{figure}
+                    \includegraphics[width=\textwidth]{images/Fig1.png}
+                \end{figure}
+        \end{columns}
     \end{frame}
 
     \begin{frame}{Technical Approach: Landing Site Detection}
