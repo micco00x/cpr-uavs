@@ -110,7 +110,7 @@
         \justifying
         \textbf{\textsc{Steepness Information}} $J_{N}$:
         \begin{itemize}
-            \item point cloud from the depthmap in global frame
+            \item depthmap in global frame using EKF
             \item \textbf{average 3D gradients algorithm} to estimate normals map $N$
             \item evaluate deviation of the normalized surface normal
                 $\hat{n}$ wrt z-axis $\hat{z}$ in the world frame:
@@ -167,7 +167,7 @@
         Probabilistic volumetric map:
         \begin{itemize}
             \item navigation and planning
-            \item low-resolution map ($0.5$m) using \textbf{OctoMaps}
+            \item low-resolution map using \textbf{OctoMaps}
             \item faster trajectory planning
         \end{itemize}
 
@@ -187,7 +187,9 @@
                     \item \textbf{RRT*} for collision free path
                     \item line-of-sight for waypoints
                     \item minimum-snap polynomial trajectories using
-                        differential flat model
+                        differentially flat model
+                    \item position-based MPC sends actuation commands
+                        given the waypoints
                     \item high speed arcs in obstacles free regions
                     \item low velocities in tight places
                 \end{itemize}
